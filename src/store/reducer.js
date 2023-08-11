@@ -1,4 +1,8 @@
-import { SET_API_DATA, SET_FILTERED_API_DATA } from "./actionTypes";
+import {
+  SET_API_DATA,
+  SET_FILTERED_API_DATA,
+  SET_FILTER_TERM,
+} from "./actionTypes";
 const initialState = {
   apiData: [],
   filteredApiData: [], // Filtrelenmiş veri listesi
@@ -14,7 +18,7 @@ const reducer = (state = initialState, action) => {
         apiData: action.payload,
         filteredApiData: action.payload,
       };
-    case "SET_SEARCH_TERM":
+    case SET_FILTER_TERM:
       return {
         ...state,
         searchTerm: action.payload,
@@ -25,6 +29,7 @@ const reducer = (state = initialState, action) => {
 
         filteredApiData: action.payload,
       };
+
     default:
       return state;
   }

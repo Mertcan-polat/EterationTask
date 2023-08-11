@@ -10,7 +10,7 @@ function Store() {
   const apiData = useSelector((state) => state.data.apiData);
   const searchTerm = useSelector((state) => state.searchTerm) || "";
   const [cartItems, setCartItems] = useState([]);
-
+  const [filtered, setFiltered] = useState([]); // State'i ekliyoruz
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
@@ -20,6 +20,22 @@ function Store() {
 
   const handleBrandChange = (event) => {
     setSelectedBrand(event.target.value);
+  };
+
+  const handleSortChange = (event) => {
+    const sortType = event.target.value;
+
+    const sortedProducts = [...filteredProducts];
+    sortedProducts.sort((a, b) => {
+      if (sortType === "newest") {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      } else if (sortType === "oldest") {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
+      return 0;
+    });
+
+    setFiltered(sortedProducts);
   };
 
   const addToCart = (product) => {
@@ -57,22 +73,6 @@ function Store() {
     setCartItems(existingCartItems);
   }, []);
 
-  const handleSortChange = (event) => {
-    const sortType = event.target.value;
-
-    const sortedProducts = [...filteredProducts];
-    sortedProducts.sort((a, b) => {
-      if (sortType === "newest") {
-        return new Date(b.createdDate) - new Date(a.createdDate);
-      } else if (sortType === "oldest") {
-        return new Date(a.createdDate) - new Date(b.createdDate);
-      }
-      return 0;
-    });
-
-    setSelectedDate(sortedProducts);
-  };
-
   const handleModelChange = (event) => {
     setSelectedModel(event.target.value);
   };
@@ -84,7 +84,7 @@ function Store() {
   const filteredProducts = apiData.filter((product) => {
     return (
       (selectedBrand === "" || product.brand === selectedBrand) &&
-      (selectedDate === "" || product.date === selectedDate) &&
+      (selectedDate === "" || product.createdAt === selectedDate) &&
       (selectedModel === "" || product.model === selectedModel) &&
       (searchTerm === "" ||
         (product.name &&

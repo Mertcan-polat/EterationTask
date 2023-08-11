@@ -78,7 +78,7 @@ function Login() {
             id="password"
             value={password}
             onChange={handlePasswordChange}
-            className="w-full px-3 py-2 rounded text-black border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
+            className="w-full px-3 py-2 mb-1 rounded text-black border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
             required
             disabled={isLoading}
           />

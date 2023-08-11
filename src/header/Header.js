@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSearchTerm } from "../store/Action";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
 
-  const handleInputChange = (event) => {
-    const newFilterValue = event.target.value;
-    setInputValue(newFilterValue);
-    dispatch(setSearchTerm(newFilterValue));
+  const handleSearchInputChange = (event) => {
+    const newSearchTerm = event.target.value;
+    setSearchTerm(newSearchTerm);
   };
 
   return (
@@ -23,7 +23,7 @@ const Header = () => {
             type="text"
             placeholder="Filtrele..."
             value={inputValue}
-            onChange={handleInputChange}
+            onChange={handleSearchInputChange}
             className="px-4 py-2 text-black rounded-lg"
           />
         </div>

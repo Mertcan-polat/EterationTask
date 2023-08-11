@@ -29,19 +29,11 @@ const Register = () => {
   };
 
   const onSubmit = (data) => {
-
     console.log(data, "asdasdsa");
     localStorage.setItem("email", data.email);
     localStorage.setItem("password", data.password);
 
-    // Kayıt işlemi başarılıysa giriş sayfasına yönlendir
     history("/");
-  };
-
-  const handlePasswordMatch = () => {
-    const password = watch("password");
-    const confirmPassword = watch("confirmPassword");
-    setPasswordMatch(password === confirmPassword);
   };
 
   const handleCancel = () => {
@@ -77,7 +69,6 @@ const Register = () => {
               placeholder="Şifre"
               value={password}
               {...register("password", { required: true })}
-
               onChange={handlePasswordChange}
             />
           </div>

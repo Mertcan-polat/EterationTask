@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { setApiData, addToCart } from "../store/Action";
+import { setApiData } from "../store/Action";
 
 function ProductDetail() {
   const { id } = useParams();
