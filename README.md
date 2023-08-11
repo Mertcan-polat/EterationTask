@@ -38,7 +38,7 @@ We welcome contributions to improve this project. If you find any issues or have
 
 ## Contact
 
-For inquiries or collaborations, you can reach out to us at contact@eteration.com.
+For inquiries or collaborations, you can reach out to us at mertcanpolatt06@gmail.com
 
 ## License
 
