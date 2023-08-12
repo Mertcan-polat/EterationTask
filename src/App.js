@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Navigate,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./login/Login";
 import Register from "./register/Register";
 import HomePage from "./homePage/HomePage";
@@ -13,8 +8,6 @@ import Header from "./header/Header";
 import ProductDetail from "./homePage/Details";
 
 function App() {
-  //const isLoggedIn = localStorage.getItem('isLoggedIn');
-
   return (
     <div className="container mx-auto">
       <Header />

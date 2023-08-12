@@ -94,7 +94,7 @@ function Login() {
           </button>
           <button
             type="button"
-            className="text-sm text-blue-500 focus:outline-none"
+            className="max-w-md bg-blue-500 p-2 rounded shadow-md"
             onClick={handleRegisterClick}
           >
             Kayıt Ol
