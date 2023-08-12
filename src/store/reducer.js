@@ -5,8 +5,8 @@ import {
 } from "./actionTypes";
 const initialState = {
   apiData: [],
-  filteredApiData: [], // Filtrelenmiş veri listesi
-  filter: "", // Filtre değeri
+  filteredApiData: [],
+  filter: "",
   searchTerm: "",
 };
 

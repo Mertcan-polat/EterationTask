@@ -45,7 +45,7 @@ function ProductDetail() {
   }
 
   const handleAddToCart = () => {
-    handleAddToCartLocal(product); // Doğrudan handleAddToCartLocal fonksiyonunu çağır
+    handleAddToCartLocal(product);
   };
 
   const calculateTotalPrice = (items) => {
