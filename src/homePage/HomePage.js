@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { setApiData } from "../store/Action";
+import { setApiData, setSearchTerm } from "../store/Action";
 
 function Store() {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   const apiData = useSelector((state) => state.data.apiData);
-  const searchTerm = useSelector((state) => state.searchTerm) || "";
+  const searchTerm = useSelector((state) => state.data.searchTerm) || "";
   const [cartItems, setCartItems] = useState([]);
   const [filtered, setFiltered] = useState([]); // State'i ekliyoruz
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -22,11 +22,31 @@ function Store() {
     setSelectedBrand(event.target.value);
   };
 
+  const filteredProducts = apiData.filter((product) => {
+    return (
+      (selectedBrand === "" || product.brand === selectedBrand) &&
+      (selectedDate === "" || product.createdAt === selectedDate) &&
+      (selectedModel === "" || product.model === selectedModel) &&
+      (searchTerm === "" ||
+        (product.name &&
+          product.name.toLowerCase().includes(searchTerm.toLowerCase())))
+    );
+  });
+
+  useEffect(() => {
+    const filteredProducts = apiData.filter(
+      (product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (selectedBrand === "" || product.brand === selectedBrand) &&
+        (selectedModel === "" || product.model === selectedModel)
+    );
+    setFiltered(filteredProducts);
+  }, [apiData, searchTerm, selectedBrand, selectedModel]);
+
   const handleSortChange = (event) => {
     const sortType = event.target.value;
 
-    const sortedProducts = [...filteredProducts];
-    sortedProducts.sort((a, b) => {
+    filteredProducts.sort((a, b) => {
       if (sortType === "newest") {
         return new Date(b.createdAt) - new Date(a.createdAt);
       } else if (sortType === "oldest") {
@@ -35,7 +55,7 @@ function Store() {
       return 0;
     });
 
-    setFiltered(sortedProducts);
+    setFiltered([...filteredProducts]);
   };
 
   const addToCart = (product) => {
@@ -81,17 +101,6 @@ function Store() {
     return items.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
-  const filteredProducts = apiData.filter((product) => {
-    return (
-      (selectedBrand === "" || product.brand === selectedBrand) &&
-      (selectedDate === "" || product.createdAt === selectedDate) &&
-      (selectedModel === "" || product.model === selectedModel) &&
-      (searchTerm === "" ||
-        (product.name &&
-          product.name.toLowerCase().includes(searchTerm.toLowerCase())))
-    );
-  });
-
   useEffect(() => {
     const apiUrl = "https://5fc9346b2af77700165ae514.mockapi.io/products";
 
@@ -103,8 +112,9 @@ function Store() {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const productsToDisplay = filteredProducts.slice(startIndex, endIndex);
+  const productsToDisplay = filtered.slice(startIndex, endIndex);
 
+  console.log(productsToDisplay, "adasdasdasd");
   const totalPages = Math.ceil(apiData.length / itemsPerPage);
   const pageNumbers = Array.from(
     { length: totalPages },
