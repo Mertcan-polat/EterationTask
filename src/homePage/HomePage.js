@@ -83,9 +83,18 @@ function Store() {
   };
 
   const removeFromCart = (productId) => {
-    const updatedCart = cartItems.filter((item) => item.id !== productId);
-    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
-    setCartItems(updatedCart);
+    const existingCartItems =
+      JSON.parse(localStorage.getItem("cartItems")) || [];
+    existingCartItems.forEach((element) => {
+      if (element.id === productId && element.quantity > 0) {
+        element.quantity--;
+        if (element.quantity === 0) {
+          existingCartItems.splice(existingCartItems.indexOf(element), 1);
+        }
+      }
+    });
+    localStorage.setItem("cartItems", JSON.stringify(existingCartItems));
+    setCartItems(existingCartItems);
   };
 
   useEffect(() => {
