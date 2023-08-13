@@ -123,7 +123,6 @@ function Store() {
   const endIndex = startIndex + itemsPerPage;
   const productsToDisplay = filtered.slice(startIndex, endIndex);
 
-  console.log(productsToDisplay, "adasdasdasd");
   const totalPages = Math.ceil(apiData.length / itemsPerPage);
   const pageNumbers = Array.from(
     { length: totalPages },
@@ -198,7 +197,7 @@ function Store() {
           </div>
         </div>
         <div className="col-span-2">
-          <div className="mt-4 border bg-white text-black rounded-lg shadow-md p-4">
+          <div className="border bg-white text-black rounded-lg shadow-md p-4">
             <h2 className="text-lg font-bold mb-2">Shopping Cart</h2>
             {cartItems.map((item) => (
               <div

@@ -32,7 +32,7 @@ const Header = ({ ...props }) => {
             value={filterValue}
             placeholder="Filtrele..."
             onChange={handleFilterChange}
-            className="px-4 py-2 text-black rounded-lg"
+            className="px-4 py-2 mr-4 text-black rounded-lg"
           />
         </div>
       </nav>
