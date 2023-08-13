@@ -1,14 +1,16 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { setSearchTerm } from "../store/Action";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { setFilter } from "../store/Action";
 
-const Header = () => {
+const Header = ({ ...props }) => {
   const dispatch = useDispatch();
+  const filterValue = useSelector((state) => state.data.filterValue);
+  const totalPrice = props.calculateTotalPrice;
 
-  const handleSearchInputChange = (event) => {
-    const newSearchTerm = event.target.value;
-    dispatch(setSearchTerm(newSearchTerm));
+  const handleFilterChange = (e) => {
+    const newFilterValue = e.target.value;
+    dispatch(setFilter(newFilterValue));
   };
 
   return (
@@ -19,11 +21,17 @@ const Header = () => {
             Eteration Task
           </Link>
         </div>
+        {totalPrice ? (
+          <p className="text-white">
+            Total Price: {totalPrice ? totalPrice : 0}
+          </p>
+        ) : null}
         <div>
           <input
             type="text"
+            value={filterValue}
             placeholder="Filtrele..."
-            onChange={handleSearchInputChange}
+            onChange={handleFilterChange}
             className="px-4 py-2 text-black rounded-lg"
           />
         </div>

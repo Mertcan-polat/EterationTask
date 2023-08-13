@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { setApiData } from "../store/Action";
+import Header from "../header/Header";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -83,7 +84,9 @@ function ProductDetail() {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="max-w-screen-xl mx-auto bg-white rounded-lg overflow-hidden shadow-md flex">
+      <Header calculateTotalPrice={calculateTotalPrice(cartItems)} />
+
+      <div className="max-w-screen-xl mt-2 mx-auto bg-white rounded-lg overflow-hidden shadow-md flex">
         <div className="flex-shrink-0 w-1/2">
           <img
             src={product.image}

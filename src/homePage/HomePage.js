@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { setApiData, setSearchTerm } from "../store/Action";
+import { setApiData, filterValue } from "../store/Action";
+import Header from "../header/Header";
 
 function Store() {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   const apiData = useSelector((state) => state.data.apiData);
-  const searchTerm = useSelector((state) => state.data.searchTerm) || "";
+  const searchTerm = useSelector((state) => state.data.filterValue) || "";
   const [cartItems, setCartItems] = useState([]);
-  const [filtered, setFiltered] = useState([]); // State'i ekliyoruz
+  const [filtered, setFiltered] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
-
+  console.log(searchTerm, "saddddddd");
   const uniqueBrands = [...new Set(apiData.map((product) => product.brand))];
   const uniqueModels = [...new Set(apiData.map((product) => product.model))];
 
@@ -102,14 +103,22 @@ function Store() {
   };
 
   useEffect(() => {
+    const filteredProducts = apiData.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFiltered(filteredProducts);
+  }, [apiData, searchTerm]);
+
+  useEffect(() => {
     const apiUrl = "https://5fc9346b2af77700165ae514.mockapi.io/products";
 
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => dispatch(setApiData(data)))
+
       .catch((error) => console.error("API veri alınamadı:", error));
   }, [dispatch]);
-
+  console.log();
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const productsToDisplay = filtered.slice(startIndex, endIndex);
@@ -123,6 +132,7 @@ function Store() {
 
   return (
     <div className="container mx-auto">
+      <Header calculateTotalPrice={calculateTotalPrice(cartItems)} />
       <div className="flex space-x-4 my-4">
         <select
           value={selectedBrand}

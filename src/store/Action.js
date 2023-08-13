@@ -13,6 +13,16 @@ export const setApiData = (data) => {
   };
 };
 
+export const updateTotalPrice = (amount) => ({
+  type: "UPDATE_TOTAL_PRICE",
+  payload: amount,
+});
+
+export const updateCartItems = (amount) => ({
+  type: "UPDATE_TOTAL_PRICE",
+  payload: amount,
+});
+
 export const addToCart = (product) => {
   return async (dispatch) => {
     try {

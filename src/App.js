@@ -10,7 +10,6 @@ import ProductDetail from "./homePage/Details";
 function App() {
   return (
     <div className="container mx-auto">
-      <Header />
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
